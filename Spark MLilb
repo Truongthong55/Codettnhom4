@@ -1,0 +1,26 @@
+(Khoi tao va ket noi sql
+from pyspark.sql import SparkSession
+spark = SparkSession.builder.getOrCreate()
+data = spark.read.csv('/home/truongthong/Documents/grades2.csv', header=True, inferSchema=True)
+
+from pyspark.ml.feature import StringIndexer
+indexer = StringIndexer(inputCol = "grades", outputCol = "grades_indexed")
+indexer_model = indexer.fit(data)
+indexed_data = indexer_model.transform(data)
+indexed_data.show()
+
+
+feature_columns = data.columns[:-1] 
+from pyspark.ml.feature import VectorAssembler
+vect_assembler = VectorAssembler(inputCols=feature_columns,outputCol="features")
+data1 = vect_assembler.transform(data)
+data1.show()
+
+(Chọn ra 2 bảng bất kì )
+finalized_data = data1.select("time","features")
+finalized_data.show()
+
+
+train_dataset, test_dataset = finalized_data.randomSplit([0.7,0.3])
+test_dataset.describe().show()
+
