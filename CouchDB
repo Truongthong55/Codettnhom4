@@ -1,0 +1,7 @@
+Tạo file mới: curl -XPUT http://Admin:Admin@localhost:5984/curd
+ Xem danh sách file mới
+curl http://Admin:Admin@localhost:5984/_all_dbs
+xóa danh sách file:
+curl -XDELETE http://Admin:Admin@localhost:5984/test
+ gán giá trị vào trang:
+   curl -XPOST http://Admin:Admin@localhost:5984/curd/ -H "Content-Type:application/json" -d "             {\"Name\": \"Vang\", \"age\":20, \"ThongTin\": {\"username\": \"Admin\", \"password\": \"Admin\" }}"
